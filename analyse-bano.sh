@@ -23,8 +23,9 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 " > $OUT
 
 for d in 01 02 03 04 05 06 07 08 09 `seq 10 19` 2A 2B `seq 21 95` `seq 971 976` ; do
-#for d in 58; do
+#for d in 31; do
 PGOPTIONS='--client-min-messages=warning' psql osm -qc "
+select * from (
 select case
   when id is null
   then format('<error class=\"33\" subclass=\"1\"><location lat=\"%s\" lon=\"%s\" /><text lang=\"fr\" value=\"%s (%s)\" /></error>',
@@ -38,9 +39,10 @@ select case
   when id is not null and id not like '%,%' and (l_geom-l_ways<100) and ((l > 0.5 and l2 < 100) or (l>0.75)) and names is not null and upper(voie_cadastre)!=voie_cadastre
     then format('<error class=\"31\" subclass=\"1\"><location lat=\"%s\" lon=\"%s\" /><text lang=\"fr\" value=\"%s (%s)\" /><way id=\"%s\"><tag k=\"name\" v=\"%s\" /></way><fixes><fix><way id=\"%s\"><tag action=\"modify\" k=\"name\" v=\"%s\" /></way></fix><fix><way id=\"%s\"><tag action=\"create\" k=\"ref:FR:FANTOIR\" v=\"%s\" /></way></fix></fixes></error>',
       lat,lon,voie_cadastre,fantoir,id,names,id,voie_cadastre,id,fantoir)
+  when names ~* voie_cadastre then ''
   else format('<error class=\"30\" subclass=\"1\"><location lat=\"%s\" lon=\"%s\" /><text lang=\"fr\" value=\"%s (%s)\" /></error>',
     lat,lon,voie_cadastre,fantoir)
-  end
+  end as er
   from (select round(st_x(st_transform(st_centroid(geom),4326))::numeric,6) as lon, round(st_y(st_transform(st_centroid(geom),4326))::numeric,6) as lat,
       coalesce(nom_voie, replace(voie_cadastre,E'\x22','')) as voie_cadastre, f.fantoir, replace(names,E'\x22','') as names, id, id_noname,
       st_length(st_intersection(ways,st_buffer(geom,20)))/st_length(ways) as l,
@@ -53,7 +55,7 @@ select case
     from (select m.fantoir, m.voie_cadastre, m.nb as nb_adresses, m.geom, string_agg(w.osm_id::text,',') as id, st_collect(w.way) as ways,
         st_collect(n.way) as ways_noname, string_agg(n.osm_id::text,',') as id_noname,
         max(w.name) as name, string_agg(w.name,';') as names
-      from (select fantoir, voie_cadastre, count(*) as nb, st_transform(st_convexhull(st_collect(geometrie)),900913) as geom from cumul_adresses where voie_osm ='' group by 1,2) as m
+      from (select fantoir, voie_cadastre, count(*) as nb, st_transform(st_convexhull(st_collect(geometrie)),900913) as geom from cumul_adresses where coalesce(voie_osm,'') ='' group by 1,2) as m
       left join planet_osm_line w on ((st_intersects(w.way, geom) or st_dwithin(w.way,geom,20)) and w.highway is not null)
       left join planet_osm_line n on (n.osm_id=w.osm_id and n.name is null)
       where nb>=2 and m.fantoir ~ '^$d.*[0-9]....$'
@@ -61,12 +63,12 @@ select case
     left join statut_fantoir s on (s.fantoir=f.fantoir)
     left join (select nom_voie, code_insee||fant_voie||'%' as fantoir from ban where code_insee ~ '^$d' group by 1,2) as b on (f.fantoir like b.fantoir)
     where s.fantoir is null and coalesce(name,'') != voie_cadastre
-    group by geom, id, id_noname, f.fantoir, voie_cadastre, ways, ways_noname, name, names, b.nom_voie) as m order by l_noname desc, l desc;
+    group by geom, id, id_noname, f.fantoir, voie_cadastre, ways, ways_noname, name, names, b.nom_voie) as m order by l_noname desc, l desc) as e where er != '';
 " -t >> $OUT
 done
 
 echo "  </analyser>
 </analysers>" >> $OUT
 
-curl -s --request POST --form source='opendata_xref-france' --form code="$OSMOSEPASS" --form content=@$OUT http://dev.osmose.openstreetmap.fr/control/send-update
+curl -s --request POST --form source='opendata_xref-france' --form code="$OSMOSEPASS" --form content=@$OUT http://osmose.openstreetmap.fr/control/send-update
 
