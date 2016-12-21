@@ -18,7 +18,7 @@ with r as (select p.geom, r.num_route, r.dep, r.id_rte500, st_transform(p.geom,4
 		round(st_x(st_centroid(r.way))::numeric,6),
 		string_agg(distinct(r.num_route),','), string_agg(distinct(r.id_rte500),','))
 	from r
-	left join planet_osm_line l on (st_dwithin(l.way,r.geom,300) and (r.num_route=regexp_replace(regexp_replace(upper(l.ref),'[^0-9A-Z\.]*','','g'),'^M','D') or r.num_route=regexp_replace(upper(l.tags->'old_ref'),'[^0-9A-Z]*','','g')) and l.highway is not null and l.ref is not null)
+	left join planet_osm_line l on (st_dwithin(l.way,r.geom,300) and (r.num_route=regexp_replace(regexp_replace(upper(l.ref),'[^0-9A-Z\.]*','','g'),'^M','D') or r.num_route=regexp_replace(upper(l.tags->'old_ref'),'[^0-9A-Z]*','','g') or r.num_route=regexp_replace(upper(l.tags->'nat_ref'),'[^0-9A-Z]*','','g')) and l.highway is not null and l.ref is not null)
 	where l.ref is null group by r.way;
 " -t >> $OUT
 
