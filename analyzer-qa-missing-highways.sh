@@ -11,7 +11,7 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 " > $OUT
 
 psql osm -c "
-select format('<error class=\"1\" subclass=\"1\"><location lat=\"%s\" lon=\"%s\" /><text lang=\"fr\" value=\"%s hab. carreau %s\" /><text lang=\"en\" value=\"square id %s (pop. %s)\" /></error>',
+select format('<error class=\"1\" subclass=\"1\"><location lat=\"%s\" lon=\"%s\" /><text lang=\"en\" value=\"%s hab. carreau %s\" /><text lang=\"en\" value=\"square id %s (pop. %s)\" /></error>',
         round(st_y(st_centroid(st_transform(wkb_geometry,4326)))::numeric,6),
 	round(st_x(st_centroid(st_transform(wkb_geometry,4326)))::numeric,6),
 	ceiling(m.ind_c), m.id,
@@ -37,7 +37,7 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 " > $OUT
 
 psql osm -c "
-select format('<error class=\"10\" subclass=\"1\"><location lat=\"%s\" lon=\"%s\" /><text lang=\"fr\" value=\"%s hab. carreau %s\" /><text lang=\"en\" value=\"square id %s (pop. %s)\" /></error>',
+select format('<error class=\"10\" subclass=\"1\"><location lat=\"%s\" lon=\"%s\" /><text lang=\"en\" value=\"%s hab. carreau %s\" /><text lang=\"en\" value=\"square id %s (pop. %s)\" /></error>',
         round(st_y(st_centroid(st_transform(wkb_geometry,4326)))::numeric,6),
         round(st_x(st_centroid(st_transform(wkb_geometry,4326)))::numeric,6),
         ceiling(m.ind_c), m.id,

@@ -11,7 +11,7 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 " > $OUT
 
 psql osm -c "
-select format('<error class=\"50\" subclass=\"1\"><location lat=\"%s\" lon=\"%s\" /><relation id=\"%s\" /><text lang=\"fr\" value=\"(%s %s)\" /><text lang=\"en\" value=\"(%s %s)\" /></error>',
+select format('<error class=\"50\" subclass=\"1\"><location lat=\"%s\" lon=\"%s\" /><relation id=\"%s\" /><text lang=\"en\" value=\"(%s %s)\" /><text lang=\"en\" value=\"(%s %s)\" /></error>',
   round(st_y(st_transform(st_pointonsurface(way),4326))::numeric,6),
   round(st_x(st_transform(st_pointonsurface(way),4326))::numeric,6),
   -osm_id,
