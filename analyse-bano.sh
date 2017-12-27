@@ -22,8 +22,7 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
     </class>
 " > $OUT
 
-for d in 01 02 03 04 05 06 07 08 09 `seq 10 19` 2A 2B `seq 21 95` `seq 971 976` ; do
-#for d in 31; do
+for d in `seq -w 1 19` 2A 2B `seq 21 95` `seq 971 976` ; do
 PGOPTIONS='--client-min-messages=warning' psql osm -qc "
 select * from (
 select case
