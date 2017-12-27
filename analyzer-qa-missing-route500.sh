@@ -16,14 +16,14 @@ with r as (select p.geom, r.num_route, r.dep, r.id_rte500, st_transform(p.geom,4
 	select format('<error class=\"2\" subclass=\"1\"><location lat=\"%s\" lon=\"%s\" /><text lang=\"fr\" value=\"%s (id_route500: %s)\" /></error>',
 		round(st_y(st_centroid(r.way))::numeric,6),
 		round(st_x(st_centroid(r.way))::numeric,6),
-		string_agg(distinct(regexp_replace(r.num_route,'([A-Z]*)([0-9A-Z]*$)','\1 \2')),','), string_agg(distinct(r.id_rte500),','))
+		string_agg(distinct(regexp_replace(r.num_route,'([A-Z]*)([0-9A-Z]*$)','\1 \2')),','), string_agg(distinct(r.id_rte500::text),','))
 	from r
 	left join planet_osm_line l on (st_dwithin(l.way,r.geom,300)
 	and (r.num_route=regexp_replace(regexp_replace(upper(l.ref),'[^0-9A-Z\.]*','','g'),'^M','D')
 	  or r.num_route=regexp_replace(upper(l.tags->'old_ref'),'[^0-9A-Z]*','','g')
 	  or r.num_route=regexp_replace(upper(l.tags->'nat_ref'),'[^0-9A-Z]*','','g'))
 	and l.highway is not null and l.ref is not null)
-	where l.ref is null group by r.way;
+	where l.ref is null and r.num_route is not null group by r.way;
 " -t >> $OUT
 
 echo "
