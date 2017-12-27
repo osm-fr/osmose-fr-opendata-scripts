@@ -17,15 +17,16 @@ select format('<error class=\"1\" subclass=\"1\"><location lat=\"%s\" lon=\"%s\"
 	ceiling(m.ind_c), m.id,
 	m.id, ceiling(m.ind_c))
 from insee_menages m
-where highways = 0 AND ceiling(m.ind_c)>5
-order by hash;
+where highways = 0 AND ceiling(m.ind_c)>5 order by m.id;
 " -t >> $OUT
 
 echo "
   </analyser>
 </analysers>" >> $OUT
 
+
 curl -s --request POST --form source='opendata_xref-france' --form code="$OSMOSEPASS" --form content=@$OUT http://osmose.openstreetmap.fr/control/send-update
+
 
 echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 <analysers timestamp=\"`date -u +%Y-%m-%dT%H:%M:%SZ`\">
@@ -43,8 +44,7 @@ select format('<error class=\"10\" subclass=\"1\"><location lat=\"%s\" lon=\"%s\
         ceiling(m.ind_c), m.id,
         m.id, ceiling(m.ind_c))
 from insee_menages m
-where highways = 0 AND ceiling(m.ind_c)<=5
-order by hash;
+where highways = 0 AND ceiling(m.ind_c)<=5 order by m.id;
 " -t >> $OUT
 
 echo "
