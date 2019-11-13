@@ -164,23 +164,25 @@ SET max_parallel_workers_per_gather TO 0;
 select * from (
 select case
   when id is null
-  then format('<error class=\"33\" subclass=\"1\"><infos id=\"%s\" /><location lat=\"%s\" lon=\"%s\" /><text lang=\"fr\" value=\"%s (%s)\" /></error>',
-    st_geohash(geom),lat,lon,voie_cadastre,fantoir)
+  then format('<error class=\"33\" subclass=\"%s\"><infos id=\"%s\" /><location lat=\"%s\" lon=\"%s\" /><text lang=\"fr\" value=\"%s (%s)\" /></error>',
+    subclass,st_geohash(geom),lat,lon,voie_cadastre,fantoir)
   when id_noname is not null and id_noname not like '%,%' and (l_geom-l_ways_noname<100) and ((l_noname > 0.5 and l2_noname<100) or (l_noname > 0.75)) and upper(voie_cadastre)!=voie_cadastre
-  then format('<error class=\"32\" subclass=\"1\"><location lat=\"%s\" lon=\"%s\" /><text lang=\"fr\" value=\"%s (%s)\" /><way id=\"%s\"></way><fixes><fix><way id=\"%s\"><tag action=\"create\" k=\"name\" v=\"%s\" /></way></fix></fixes></error>',
-    lat,lon,voie_cadastre,fantoir,id_noname,id_noname,voie_cadastre)
+  then format('<error class=\"32\" subclass=\"%s\"><location lat=\"%s\" lon=\"%s\" /><text lang=\"fr\" value=\"%s (%s)\" /><way id=\"%s\"></way><fixes><fix><way id=\"%s\"><tag action=\"create\" k=\"name\" v=\"%s\" /></way></fix></fixes></error>',
+    subclass,lat,lon,voie_cadastre,fantoir,id_noname,id_noname,voie_cadastre)
   when id is not null and id not like '%,%' and (l_geom-l_ways<100) and ((l > 0.5 and l2 < 100) or (l>0.75)) and names is null and upper(voie_cadastre)!=voie_cadastre
-    then format('<error class=\"32\" subclass=\"1\"><location lat=\"%s\" lon=\"%s\" /><text lang=\"fr\" value=\"%s (%s)\" /><way id=\"%s\"></way><fixes><fix><way id=\"%s\"><tag action=\"create\" k=\"name\" v=\"%s\" /></way></fix></fixes></error>',
-                lat,lon,voie_cadastre,fantoir,id,id,voie_cadastre)
+    then format('<error class=\"32\" subclass=\"%s\"><location lat=\"%s\" lon=\"%s\" /><text lang=\"fr\" value=\"%s (%s)\" /><way id=\"%s\"></way><fixes><fix><way id=\"%s\"><tag action=\"create\" k=\"name\" v=\"%s\" /></way></fix></fixes></error>',
+                subclass,lat,lon,voie_cadastre,fantoir,id,id,voie_cadastre)
   when id is not null and id not like '%,%' and (l_geom-l_ways<100) and ((l > 0.5 and l2 < 100) or (l>0.75)) and names is not null and upper(voie_cadastre)!=voie_cadastre
-    then format('<error class=\"31\" subclass=\"1\"><location lat=\"%s\" lon=\"%s\" /><text lang=\"fr\" value=\"%s (%s)\" /><way id=\"%s\"><tag k=\"name\" v=\"%s\" /></way><fixes><fix><way id=\"%s\"><tag action=\"modify\" k=\"name\" v=\"%s\" /></way></fix><fix><way id=\"%s\"><tag action=\"create\" k=\"ref:FR:FANTOIR\" v=\"%s\" /></way></fix></fixes></error>',
-      lat,lon,voie_cadastre,fantoir,id,names,id,voie_cadastre,id,fantoir)
+    then format('<error class=\"31\" subclass=\"%s\"><location lat=\"%s\" lon=\"%s\" /><text lang=\"fr\" value=\"%s (%s)\" /><way id=\"%s\"><tag k=\"name\" v=\"%s\" /></way><fixes><fix><way id=\"%s\"><tag action=\"modify\" k=\"name\" v=\"%s\" /></way></fix><fix><way id=\"%s\"><tag action=\"create\" k=\"ref:FR:FANTOIR\" v=\"%s\" /></way></fix></fixes></error>',
+      subclass,lat,lon,voie_cadastre,fantoir,id,names,id,voie_cadastre,id,fantoir)
   when names ~* replace(replace(voie_cadastre,'(',''),')','') then ''
-  else format('<error class=\"30\" subclass=\"1\"><location lat=\"%s\" lon=\"%s\" /><text lang=\"fr\" value=\"%s (%s)\" /></error>',
-    lat,lon,voie_cadastre,fantoir)
+  else format('<error class=\"30\" subclass=\"%s\"><location lat=\"%s\" lon=\"%s\" /><text lang=\"fr\" value=\"%s (%s)\" /></error>',
+    subclass,lat,lon,voie_cadastre,fantoir)
   end as er
   from (
-    select round(st_x(st_transform(st_centroid(geom),4326))::numeric,6) as lon, round(st_y(st_transform(st_centroid(geom),4326))::numeric,6) as lat, st_transform(st_centroid(geom),4326),
+    select
+      abs(('x'||md5(coalesce(nom_voie, replace(voie_cadastre,E'\x22','')) || f.fantoir || ST_AsText(geom)))::bit(64)::bigint) AS subclass,
+      round(st_x(st_transform(st_centroid(geom),4326))::numeric,6) as lon, round(st_y(st_transform(st_centroid(geom),4326))::numeric,6) as lat, st_transform(st_centroid(geom),4326),
       replace(voie_cadastre,E'\x22','') as voie_cadastre, f.fantoir, replace(names,E'\x22','') as names, id, id_noname,
       st_length(st_intersection(ways,st_buffer(geom,20)))/st_length(ways) as l,
       st_length(st_transform(ways,4326)::geography)-st_length(st_transform(st_intersection(ways,geom),4326)::geography) as l2,
