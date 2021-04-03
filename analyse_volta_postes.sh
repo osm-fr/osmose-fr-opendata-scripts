@@ -7,7 +7,7 @@ rm -f $OUT
 echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 <analysers timestamp=\"`date -u +%Y-%m-%dT%H:%M:%SZ`\">
   <analyser timestamp=\"`date -u +%Y-%m-%dT%H:%M:%SZ`\">
-    <class item=\"7170\" tag=\"power\" id=\"$ERROR\" level=\"3\">
+    <class item=\"8281\" tag=\"power\" id=\"$ERROR\" level=\"3\">
       <classtext lang=\"fr\" title=\"(TEST) poste de transformation HT/BT à intégrer\" />
       <classtext lang=\"en\" title=\"(TEST) power=substation from opendata\" />
     </class>
