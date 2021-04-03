@@ -11,18 +11,32 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 " > $OUT
 
 psql osm -c "
-select format('<error class=\"50\" subclass=\"1\"><location lat=\"%s\" lon=\"%s\" /><relation id=\"%s\" /><text lang=\"fr\" value=\"(%s %s)\" /><text lang=\"en\" value=\"(%s %s)\" /></error>',
+create temporary table no_building as SELECT
+  m.osm_id, m.insee, m.nb, m.name, m.way, count(*) as total                                                                                                           FROM                
+(   SELECT
+        co.tags->'ref:INSEE' as insee,
+        co.way,
+        co.name,
+        co.osm_id,
+        count(*) as nb
+    FROM
+        insee_menages i
+    JOIN
+        osm_admin_fr co on (st_covers(co.way, i.wkb_geometry) and co.admin_level='8')
+    JOIN
+        cadastre ca on (ca.insee=co.tags->'ref:INSEE')
+    WHERE buildings = 0 and ca.format='VECT'
+    GROUP BY 1,2,3,4
+) m
+JOIN
+  insee_menages i ON (ST_covers(m.way, i.wkb_geometry))
+GROUP BY 1,2,3,4,5
+HAVING nb > count(*)/2;
+SELECT format('<error class=\"50\" subclass=\"1\"><location lat=\"%s\" lon=\"%s\" /><relation id=\"%s\" /><text lang=\"fr\" value=\"(%s %s)\" /><text lang=\"en\" value=\"(%s %s)\" /></error>',
   round(st_y(st_transform(st_pointonsurface(way),4326))::numeric,6),
   round(st_x(st_transform(st_pointonsurface(way),4326))::numeric,6),
-  -osm_id,
-  insee,
-  c.name,
-  insee,
-  c.name)
-from (select c.insee, count(i.*)::float as total, sum(case when i.buildings=0 then 1 else 0 end)::float as missing
-  from cadastre c join insee_menages i on (i.insee=c.insee)
-  where c.format='VECT' group by 1) as m
-join planet_osm_polygon c on (c.tags->'ref:INSEE'=m.insee) where c.tags ? 'ref:INSEE' and c.admin_level='8' and missing/total>0.5;
+  -osm_id, insee, name, insee, name)
+FROM no_building;
 " -t >> $OUT
 
 echo "
