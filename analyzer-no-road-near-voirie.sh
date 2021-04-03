@@ -22,12 +22,12 @@ from
     from (select st_transform(v.centre,4326) as geom, replace(v.fantoir,'_','') as fantoir, trim(format('%s %s',f.nature_voie, f.nom_voie)) as nom
       from cadastre_voirie v
       join dgfip_fantoir_voies f on (f.fantoir=v.fantoir and f.mot not in ('EXPLOITA','RURAL'))
-      left join planet_osm_line h on (st_dwithin(h.way, v.centre, $DIST*3) and h.highway is not null
+      left join planet_osm_line h on (st_dwithin(h.way, v.centre, $DIST*5) and h.highway is not null
         and (st_distance(st_transform(h.way,4326)::geography, st_transform(v.centre,4326)::geography)<$DIST
              or st_distance(st_transform(st_centroid(h.way),4326)::geography, st_transform(v.centre,4326)::geography) < $DIST) )
       left join planet_osm_polygon a on (st_dwithin(a.way, v.centre, $DIST*3) and a.highway is not null
         and st_distance(st_transform(a.way,4326)::geography, st_transform(v.centre,4326)::geography)<$DIST)
-      where v.centre is not null and v.fantoir like '$DEP%' and h.way is null group by 1,2,3) as g
+      where v.centre is not null and v.fantoir like '$DEP%' and h.way is null and a.way is null group by 1,2,3) as g
   ) as err;
 " -t >> $OUT
 done
