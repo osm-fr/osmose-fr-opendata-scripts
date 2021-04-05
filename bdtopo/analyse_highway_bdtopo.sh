@@ -1,6 +1,8 @@
 #! /bin/bash
 
-OUT=7170_1_route_manquante.xml.gz
+source ../config.sh
+
+OUT="${OUTDIR}/7170_1_route_manquante.xml.gz"
 ERROR=1
 rm -f $OUT
 
@@ -16,7 +18,7 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 for DEP in $(seq -w 01 95) 2A 2B
 do
 echo -n "$DEP "
-PGOPTIONS='--client-min-messages=warning' psql osm -qc "
+PGOPTIONS='--client-min-messages=warning' ${PSQL} osm -qc "
 SET enable_hashagg to 'off';
 SET max_parallel_workers_per_gather TO 0;
 
@@ -54,7 +56,6 @@ done
 echo "  </analyser>
 </analysers>" | gzip -9 >> $OUT
 
-source ../config.sh
 curl --form source="opendata_xref-france" --form code="$OSMOSEPASS" --form content=@$OUT -H 'Host: osmose.openstreetmap.fr' ${FRONTEND_API}
 sleep 30
 curl --form source="opendata_xref-france" --form code="$OSMOSEPASS" --form content=@$OUT -H 'Host: osmose.openstreetmap.fr' ${FRONTEND_API}

@@ -1,6 +1,5 @@
 . $(dirname $0)/config.sh
-OUT=/home/cquest/public_html/admin-express.xml
-OUT=admin-express.xml
+OUT="${OUTDIR}/admin-express.xml"
 
 echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 <analysers timestamp=\"`date -u +%Y-%m-%dT%H:%M:%SZ`\">
@@ -13,7 +12,7 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 
 for d in `seq -w 1 97` 2A 2B; do
 echo $d
-psql osm -c "
+${PSQL} osm -c "
 select format('<error class=\"40\" subclass=\"1\"><location lat=\"%s\" lon=\"%s\" /><text lang=\"fr\" value=\"%s m - %s\" /></error>',
   round(st_y(geom)::numeric,6),
   round(st_x(geom)::numeric,6),

@@ -1,6 +1,7 @@
 #! /bin/bash
 
-OUT=volta_lignes_RTE.xml.gz
+source ./config.sh
+OUT="${OUTDIR}/volta_lignes_RTE.xml.gz"
 ERROR=95
 rm -f $OUT
 
@@ -13,7 +14,7 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
     </class>
 "| gzip -9 >> $OUT
 
-PGOPTIONS='--client-min-messages=warning' psql osm -qc "
+PGOPTIONS='--client-min-messages=warning' ${PSQL} osm -qc "
 
 select format('<error class=\"$ERROR\" subclass=\"1\" ><infos id=\"%s\" /><location lat=\"%s\" lon=\"%s\" /><text lang=\"fr\" value=\"%s\" /></error>',
     st_geohash(geom),
@@ -44,7 +45,6 @@ from (
 echo "  </analyser>
 </analysers>" | gzip -9 >> $OUT
 
-source ./config.sh
 curl --form source='opendata_xref-france' --form code="$OSMOSEPASS" --form content=@$OUT -H 'Host: osmose.openstreetmap.fr' ${FRONTEND_API}
 sleep 30
 curl --form source='opendata_xref-france' --form code="$OSMOSEPASS" --form content=@$OUT -H 'Host: osmose.openstreetmap.fr' ${FRONTEND_API}

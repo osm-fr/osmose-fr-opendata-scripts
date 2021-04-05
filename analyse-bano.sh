@@ -1,11 +1,13 @@
 #! /bin/bash
 
+source $(dirname $0)/config.sh
+
 CLASS="30  31 32 33"
 DEPS="`seq -w 01 19` 2A 2B `seq 21 95` `seq 971 976`"
 #DEPS='77 89 94'
 
 # vue matérialisée des manques OSM d'après BANO
-PGOPTIONS='--client-min-messages=warning' psql osm -c "
+PGOPTIONS='--client-min-messages=warning' ${PSQL} osm -c "
 CREATE TABLE if not exists bano_manque (fantoir char(10), voie_cadastre varchar(300), nb int, geom geometry);
 TRUNCATE bano_manque;
 INSERT INTO bano_manque
@@ -21,7 +23,7 @@ INSERT INTO bano_manque
 "
 
 
-psql osm -c "
+${PSQL} osm -c "
 create or replace view bano_analyse as select * from (
 select fantoir, case
   when id is null
@@ -70,8 +72,6 @@ select fantoir, case
   ) as m order by l_noname desc, l desc) as e where er != '';
 "
 
-source $(dirname $0)/config.sh
-
 for class in $CLASS
 do
 OUT=${OUTDIR}/insee_bano-france-$class.xml.gz
@@ -110,7 +110,7 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 
 for d in $DEPS; do
 echo -n '.'
-PGOPTIONS='--client-min-messages=warning' psql osm -qc "
+PGOPTIONS='--client-min-messages=warning' ${PSQL} osm -qc "
 SET statement_timeout = '300s';
 SET enable_hashagg to 'off';
 SET max_parallel_workers_per_gather TO 0;
@@ -152,8 +152,8 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 " | gzip -9 > $OUT
 
 for d in `seq -w 01 19` 2A 2B `seq 21 95` `seq 971 976` ;do
-#for d in $(psql osm -tA -c "SELECT left(fantoir,5) from bano_manque WHERE fantoir like '77%' group by 1 order by 1"); do
-PGOPTIONS='--client-min-messages=warning' psql osm -qc "
+#for d in $(${PSQL} osm -tA -c "SELECT left(fantoir,5) from bano_manque WHERE fantoir like '77%' group by 1 order by 1"); do
+PGOPTIONS='--client-min-messages=warning' ${PSQL} osm -qc "
 SET statement_timeout = '120s';
 SET enable_hashagg to 'off';
 SET max_parallel_workers_per_gather TO 0;

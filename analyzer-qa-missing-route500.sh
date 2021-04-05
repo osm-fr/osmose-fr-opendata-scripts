@@ -1,7 +1,7 @@
 . $(dirname $0)/config.sh
-OUT=/home/cquest/public_html/insee_route500-france.xml
+OUT="${OUTDIR}/insee_route500-france.xml"
 
-psql osm -c "refresh materialized view r500_pts;"
+${PSQL} osm -c "refresh materialized view r500_pts;"
 
 echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 <analysers timestamp=\"`date -u +%Y-%m-%dT%H:%M:%SZ`\">
@@ -12,7 +12,7 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
     </class>
 " > $OUT
 
-psql osm -c "
+${PSQL} osm -c "
 with r as (select p.geom, r.num_route, r.dep, r.id_rte500, st_transform(p.geom,4326) as way from r500_pts p join r500 r on (r.id_rte500=p.id)
 	where num_route !='')
 	select format('<error class=\"2\" subclass=\"1\"><location lat=\"%s\" lon=\"%s\" /><text lang=\"fr\" value=\"%s (id_route500: %s)\" /></error>',

@@ -1,5 +1,5 @@
 . $(dirname $0)/config.sh
-OUT=/home/cquest/public_html/insee_batiments-france.xml
+OUT="${OUTDIR}/insee_batiments-france.xml"
 
 echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 <analysers timestamp=\"`date -u +%Y-%m-%dT%H:%M:%SZ`\">
@@ -10,7 +10,7 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
     </class>
 " > $OUT
 
-psql osm -c "
+${PSQL} osm -c "
 create temporary table no_building as SELECT
   m.osm_id, m.insee, m.nb, m.name, m.way, count(*) as total                                                                                                           FROM                
 (   SELECT
@@ -44,4 +44,3 @@ echo "
 </analysers>" >> $OUT
 
 curl -s --request POST --form source='opendata_xref-france' --form code="$OSMOSEPASS" --form content=@$OUT ${FRONTEND_API}
-#/usr/local/bin/http --timeout=300 --form POST http://dev.osmose.openstreetmap.fr/control/send-update source='opendata_xref-france' code="$OSMOSEPASS" content@$OUT

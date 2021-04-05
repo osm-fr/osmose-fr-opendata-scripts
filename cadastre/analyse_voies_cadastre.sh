@@ -1,6 +1,8 @@
 #! /bin/bash
+source ../config.sh
 
-OUT=test.xml.gz
+OUT="${OUTDIR}/test.xml.gz"
+
 rm -f $OUT
 
 echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
@@ -14,7 +16,7 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 
 for D in 77 89 94
 do
-PGOPTIONS='--client-min-messages=warning' psql osm -qc "
+PGOPTIONS='--client-min-messages=warning' ${PSQL} osm -qc "
 SET statement_timeout = '300s';
 SET enable_hashagg to 'off';
 SET max_parallel_workers_per_gather TO 0;
@@ -52,5 +54,4 @@ done
 echo "  </analyser>
 </analysers>" | gzip -9 >> $OUT
 
-source ../config.sh
 curl -v --form source='opendata_xref-france' --form code="$OSMOSEPASS" --form content=@$OUT -H 'Host: osmose.openstreetmap.fr' ${FRONTEND_API}

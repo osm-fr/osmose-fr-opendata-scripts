@@ -1,6 +1,8 @@
 #! /bin/bash
 
-OUT=test-waterways.xml.gz
+source ../config.sh
+
+OUT='${OUTDIR}/test-waterways.xml.gz"
 ERROR=98
 rm -f $OUT
 
@@ -13,7 +15,7 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
     </class>
 "| gzip -9 >> $OUT
 
-PGOPTIONS='--client-min-messages=warning' psql osm -qc "
+PGOPTIONS='--client-min-messages=warning' ${PSQL} osm -qc "
 SET enable_hashagg to 'off';
 SET max_parallel_workers_per_gather TO 0;
 
@@ -44,7 +46,6 @@ from (
 echo "  </analyser>
 </analysers>" | gzip -9 >> $OUT
 
-source ../config.sh
 curl --form source='opendata_xref-france' --form code="$OSMOSEPASS" --form content=@$OUT -H 'Host: osmose.openstreetmap.fr' ${FRONTEND_API}
 sleep 300
 curl --form source='opendata_xref-france' --form code="$OSMOSEPASS" --form content=@$OUT -H 'Host: osmose.openstreetmap.fr' ${FRONTEND_API}

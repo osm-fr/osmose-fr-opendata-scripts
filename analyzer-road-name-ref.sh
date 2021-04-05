@@ -1,6 +1,5 @@
 . $(dirname $0)/config.sh
-OUT=/home/cquest/public_html/roads-similar-name-ref.xml
-OUT=roads-similar-name-ref.xml
+OUT="${OUTDIR}/roads-similar-name-ref.xml"
 
 echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 <analysers timestamp=\"`date -u +%Y-%m-%dT%H:%M:%SZ`\">
@@ -11,7 +10,7 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
     </class>
 " > $OUT
 
-psql osm -c "
+${PSQL} osm -c "
 select format('<error class=\"3\" subclass=\"1\"><location lat=\"%s\" lon=\"%s\" /><text lang=\"fr\" value=\"ref=%s name=%s\" /><way id=\"%s\"></way><fixes><fix><way id=\"%s\"><tag action=\"delete\" k=\"name\" v=\"\" /></way></fix></fixes></error>',
   round(st_y(ST_Transform(ST_LineInterpolatePoint(l.way,0.5),4326))::numeric,6),
   round(st_x(ST_Transform(ST_LineInterpolatePoint(l.way,0.5),4326))::numeric,6),

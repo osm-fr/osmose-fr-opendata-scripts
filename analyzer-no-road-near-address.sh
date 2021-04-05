@@ -1,5 +1,5 @@
 . $(dirname $0)/config.sh
-OUT=/home/cquest/public_html/adresses_sans_route-france.xml
+OUT="${OUTDIR}/adresses_sans_route-france.xml"
 DIST=200
 
 echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
@@ -14,7 +14,7 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 for DEP in 08 14 51 52 89 77 94
 do
   echo $DEP
-psql osm -c "
+${PSQL} osm -c "
 select format('<error class=\"12\" subclass=\"1\"><location lat=\"%s\" lon=\"%s\" /><text lang=\"fr\" value=\"\" /><text lang=\"en\" value=\"\" /></error>',
         lat,
 	lon)

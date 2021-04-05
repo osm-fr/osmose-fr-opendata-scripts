@@ -1,5 +1,5 @@
 . $(dirname $0)/config.sh
-OUT=/home/cquest/public_html/insee_routes-france.xml
+OUT="${OUTDIR}/insee_routes-france.xml"
 
 echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 <analysers timestamp=\"`date -u +%Y-%m-%dT%H:%M:%SZ`\">
@@ -10,7 +10,7 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
     </class>
 " > $OUT
 
-psql osm -c "
+${PSQL} osm -c "
 select format('<error class=\"1\" subclass=\"1\"><location lat=\"%s\" lon=\"%s\" /><text lang=\"fr\" value=\"%s hab. carreau %s\" /><text lang=\"en\" value=\"square id %s (pop. %s)\" /></error>',
         round(st_y(st_centroid(st_transform(wkb_geometry,4326)))::numeric,6),
 	round(st_x(st_centroid(st_transform(wkb_geometry,4326)))::numeric,6),
@@ -37,7 +37,7 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
     </class>
 " > $OUT
 
-psql osm -c "
+${PSQL} osm -c "
 select format('<error class=\"10\" subclass=\"1\"><location lat=\"%s\" lon=\"%s\" /><text lang=\"fr\" value=\"%s hab. carreau %s\" /><text lang=\"en\" value=\"square id %s (pop. %s)\" /></error>',
         round(st_y(st_centroid(st_transform(wkb_geometry,4326)))::numeric,6),
         round(st_x(st_centroid(st_transform(wkb_geometry,4326)))::numeric,6),

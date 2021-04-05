@@ -1,6 +1,5 @@
 . $(dirname $0)/config.sh
-OUT=/home/cquest/public_html/cadastre.xml
-OUT=cadastre.xml
+OUT=${OUTDIR}/cadastre.xml
 
 echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 <analysers timestamp=\"`date -u +%Y-%m-%dT%H:%M:%SZ`\">
@@ -15,7 +14,7 @@ for d in `seq -w 1 19` 2A 2B `seq 21 95`
 #for d in 77 78 89 `seq 91 95`
 do
   echo $d
-  psql osm -c "
+  ${PSQL} osm -c "
   select format('<error class=\"40\" subclass=\"1\"><location lat=\"%s\" lon=\"%s\" /><text lang=\"fr\" value=\"jusque %s m - %s\" /><text lang=\"en\" value=\"up to %s m - %s\" /></error>',
     round(lat::numeric,6),
     round(lon::numeric,6),
