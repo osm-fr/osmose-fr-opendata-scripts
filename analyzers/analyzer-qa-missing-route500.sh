@@ -2,7 +2,7 @@
 
 source $(dirname $0)/../config.sh
 
-OUT="${OUTDIR}/insee_route500-france.xml"
+OUT="${DIR_WORK}/insee_route500-france.xml"
 
 ${PSQL} osm -c "refresh materialized view r500_pts;"
 
@@ -35,4 +35,4 @@ echo "
   </analyser>
 </analysers>" >> $OUT
 
-curl -s --request POST --form source='opendata_xref-france' --form code="$OSMOSEPASS" --form content=@$OUT ${FRONTEND_API}
+curl -s --request POST --form source='opendata_xref-france' --form code="$OSMOSEPASS" --form content=@$OUT ${URL_FRONTEND_UPDATE}

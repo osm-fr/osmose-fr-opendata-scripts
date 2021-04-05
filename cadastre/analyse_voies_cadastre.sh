@@ -1,7 +1,7 @@
 #! /bin/bash
 source ../config.sh
 
-OUT="${OUTDIR}/test.xml.gz"
+OUT="${DIR_WORK}/test.xml.gz"
 
 rm -f $OUT
 
@@ -54,4 +54,4 @@ done
 echo "  </analyser>
 </analysers>" | gzip -9 >> $OUT
 
-curl -v --form source='opendata_xref-france' --form code="$OSMOSEPASS" --form content=@$OUT -H 'Host: osmose.openstreetmap.fr' ${FRONTEND_API}
+curl -v --form source='opendata_xref-france' --form code="$OSMOSEPASS" --form content=@$OUT -H 'Host: osmose.openstreetmap.fr' ${URL_FRONTEND_UPDATE}

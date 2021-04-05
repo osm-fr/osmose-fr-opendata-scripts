@@ -2,7 +2,7 @@
 
 source ../config.sh
 
-OUT="${OUTDIR}/7170_1_route_manquante.xml.gz"
+OUT="${DIR_WORK}/7170_1_route_manquante.xml.gz"
 ERROR=1
 rm -f $OUT
 
@@ -56,7 +56,7 @@ done
 echo "  </analyser>
 </analysers>" | gzip -9 >> $OUT
 
-curl --form source="opendata_xref-france" --form code="$OSMOSEPASS" --form content=@$OUT -H 'Host: osmose.openstreetmap.fr' ${FRONTEND_API}
+curl --form source="opendata_xref-france" --form code="$OSMOSEPASS" --form content=@$OUT -H 'Host: osmose.openstreetmap.fr' ${URL_FRONTEND_UPDATE}
 sleep 30
-curl --form source="opendata_xref-france" --form code="$OSMOSEPASS" --form content=@$OUT -H 'Host: osmose.openstreetmap.fr' ${FRONTEND_API}
+curl --form source="opendata_xref-france" --form code="$OSMOSEPASS" --form content=@$OUT -H 'Host: osmose.openstreetmap.fr' ${URL_FRONTEND_UPDATE}
 

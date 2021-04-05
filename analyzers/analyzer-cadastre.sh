@@ -2,7 +2,7 @@
 
 source $(dirname $0)/../config.sh
 
-OUT=${OUTDIR}/cadastre.xml
+OUT=${DIR_WORK}/cadastre.xml
 
 echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 <analysers timestamp=\"`date -u +%Y-%m-%dT%H:%M:%SZ`\">
@@ -50,4 +50,4 @@ echo "
   </analyser>
 </analysers>" >> $OUT
 
-curl -s --request POST --compressed --form source='opendata_xref-france' --form code="$OSMOSEPASS" --form content=@$OUT ${FRONTEND_API}
+curl -s --request POST --compressed --form source='opendata_xref-france' --form code="$OSMOSEPASS" --form content=@$OUT ${URL_FRONTEND_UPDATE}

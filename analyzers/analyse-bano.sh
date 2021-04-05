@@ -74,7 +74,7 @@ select fantoir, case
 
 for class in $CLASS
 do
-OUT=${OUTDIR}/insee_bano-france-$class.xml.gz
+OUT=${DIR_WORK}/insee_bano-france-$class.xml.gz
 
 echo "class: $class"
 
@@ -123,7 +123,7 @@ echo "  </analyser>
 
 echo ""
 
-curl -v --form source='opendata_xref-france' --form code="$OSMOSEPASS" --form content=@$OUT -H 'Host: osmose.openstreetmap.fr' ${FRONTEND_API}
+curl -v --form source='opendata_xref-france' --form code="$OSMOSEPASS" --form content=@$OUT -H 'Host: osmose.openstreetmap.fr' ${URL_FRONTEND_UPDATE}
 
 done
 
@@ -209,5 +209,5 @@ done
 echo "  </analyser>
 </analysers>" | gzip -9 >> $OUT
 
-curl -s --request POST --form source='opendata_xref-france' --form code="$OSMOSEPASS" --form content=@$OUT -H 'Host: osmose.openstreetmap.fr' ${FRONTEND_API}
+curl -s --request POST --form source='opendata_xref-france' --form code="$OSMOSEPASS" --form content=@$OUT -H 'Host: osmose.openstreetmap.fr' ${URL_FRONTEND_UPDATE}
 

@@ -2,7 +2,7 @@
 
 source $(dirname $0)/../config.sh
 
-OUT="${OUTDIR}/adresses_sans_route-france.xml"
+OUT="${DIR_WORK}/adresses_sans_route-france.xml"
 DIST=200
 
 echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
@@ -38,4 +38,4 @@ echo "
 </analysers>" >> $OUT
 
 
-curl -s --request POST --form source='opendata_xref-france' --form code="$OSMOSEPASS" --form content=@$OUT ${FRONTEND_API}
+curl -s --request POST --form source='opendata_xref-france' --form code="$OSMOSEPASS" --form content=@$OUT ${URL_FRONTEND_UPDATE}

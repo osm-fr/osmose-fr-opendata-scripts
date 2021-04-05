@@ -2,7 +2,7 @@
 
 source ../config.sh
 
-OUT='${OUTDIR}/test-waterways.xml.gz"
+OUT='${DIR_WORK}/test-waterways.xml.gz"
 ERROR=98
 rm -f $OUT
 
@@ -46,8 +46,8 @@ from (
 echo "  </analyser>
 </analysers>" | gzip -9 >> $OUT
 
-curl --form source='opendata_xref-france' --form code="$OSMOSEPASS" --form content=@$OUT -H 'Host: osmose.openstreetmap.fr' ${FRONTEND_API}
+curl --form source='opendata_xref-france' --form code="$OSMOSEPASS" --form content=@$OUT -H 'Host: osmose.openstreetmap.fr' ${URL_FRONTEND_UPDATE}
 sleep 300
-curl --form source='opendata_xref-france' --form code="$OSMOSEPASS" --form content=@$OUT -H 'Host: osmose.openstreetmap.fr' ${FRONTEND_API}
+curl --form source='opendata_xref-france' --form code="$OSMOSEPASS" --form content=@$OUT -H 'Host: osmose.openstreetmap.fr' ${URL_FRONTEND_UPDATE}
 
 

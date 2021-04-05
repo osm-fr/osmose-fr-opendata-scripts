@@ -2,7 +2,7 @@
 
 source $(dirname $0)/../config.sh
 
-OUT="${OUTDIR}/volta-postes.xml.gz"
+OUT="${DIR_WORK}/volta-postes.xml.gz"
 ERROR=94
 rm -f $OUT
 
@@ -81,7 +81,7 @@ done
 echo "  </analyser>
 </analysers>" | gzip -9 >> $OUT
 
-curl --form source='opendata_xref-france' --form code="$OSMOSEPASS" --form content=@$OUT -H 'Host: osmose.openstreetmap.fr' ${FRONTEND_API}
+curl --form source='opendata_xref-france' --form code="$OSMOSEPASS" --form content=@$OUT -H 'Host: osmose.openstreetmap.fr' ${URL_FRONTEND_UPDATE}
 sleep 30
-curl --form source='opendata_xref-france' --form code="$OSMOSEPASS" --form content=@$OUT -H 'Host: osmose.openstreetmap.fr' ${FRONTEND_API}
+curl --form source='opendata_xref-france' --form code="$OSMOSEPASS" --form content=@$OUT -H 'Host: osmose.openstreetmap.fr' ${URL_FRONTEND_UPDATE}
 
