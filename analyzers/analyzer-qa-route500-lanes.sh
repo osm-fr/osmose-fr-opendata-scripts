@@ -1,4 +1,7 @@
-. $(dirname $0)/config.sh
+#! /bin/bash
+
+source $(dirname $0)/../config.sh
+
 OUT="${OUTDIR}/insee_route500-france-lanes.xml"
 
 echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>

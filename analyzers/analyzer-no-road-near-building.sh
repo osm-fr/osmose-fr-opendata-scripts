@@ -1,4 +1,7 @@
-. $(dirname $0)/config.sh
+#! /bin/bash
+
+source $(dirname $0)/../config.sh
+
 OUT="${OUTDIR}/building_sans_route-france.xml"
 DIST=200
 DEP=$1

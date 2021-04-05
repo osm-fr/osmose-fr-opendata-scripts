@@ -1,6 +1,6 @@
 #! /bin/bash
 
-source $(dirname $0)/config.sh
+source $(dirname $0)/../config.sh
 
 CLASS="30  31 32 33"
 DEPS="`seq -w 01 19` 2A 2B `seq 21 95` `seq 971 976`"

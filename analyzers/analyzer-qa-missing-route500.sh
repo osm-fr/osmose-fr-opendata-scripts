@@ -1,4 +1,7 @@
-. $(dirname $0)/config.sh
+#! /bin/bash
+
+source $(dirname $0)/../config.sh
+
 OUT="${OUTDIR}/insee_route500-france.xml"
 
 ${PSQL} osm -c "refresh materialized view r500_pts;"

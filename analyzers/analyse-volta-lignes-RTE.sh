@@ -1,6 +1,7 @@
 #! /bin/bash
 
-source ./config.sh
+source $(dirname $0)/../config.sh
+
 OUT="${OUTDIR}/volta_lignes_RTE.xml.gz"
 ERROR=95
 rm -f $OUT

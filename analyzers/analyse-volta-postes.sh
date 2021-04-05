@@ -1,6 +1,7 @@
 #! /bin/bash
 
-source ./config.sh
+source $(dirname $0)/../config.sh
+
 OUT="${OUTDIR}/volta-postes.xml.gz"
 ERROR=94
 rm -f $OUT
