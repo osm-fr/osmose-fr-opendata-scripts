@@ -123,7 +123,7 @@ echo "  </analyser>
 
 echo ""
 
-curl -v --form source='opendata_xref-france' --form code="$OSMOSEPASS" --form content=@$OUT -H 'Host: osmose.openstreetmap.fr' http://osm153.openstreetmap.fr/control/send-update
+curl -v --form source='opendata_xref-france' --form code="$OSMOSEPASS" --form content=@$OUT -H 'Host: osmose.openstreetmap.fr' http://osmose.openstreetmap.fr/control/send-update
 
 done
 
@@ -209,5 +209,5 @@ done
 echo "  </analyser>
 </analysers>" | gzip -9 >> $OUT
 
-curl -s --request POST --form source='opendata_xref-france' --form code="$OSMOSEPASS" --form content=@$OUT -H 'Host: osmose.openstreetmap.fr' http://osm153.openstreetmap.fr/control/send-update
+curl -s --request POST --form source='opendata_xref-france' --form code="$OSMOSEPASS" --form content=@$OUT -H 'Host: osmose.openstreetmap.fr' http://osmose.openstreetmap.fr/control/send-update
 

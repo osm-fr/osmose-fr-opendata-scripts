@@ -53,4 +53,4 @@ echo "  </analyser>
 </analysers>" | gzip -9 >> $OUT
 
 source ../config.sh
-curl -v --form source='opendata_xref-france' --form code="$OSMOSEPASS" --form content=@$OUT -H 'Host: osmose.openstreetmap.fr' http://osm153.openstreetmap.fr/control/send-update
+curl -v --form source='opendata_xref-france' --form code="$OSMOSEPASS" --form content=@$OUT -H 'Host: osmose.openstreetmap.fr' http://osmose.openstreetmap.fr/control/send-update
