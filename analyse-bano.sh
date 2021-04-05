@@ -74,7 +74,7 @@ source $(dirname $0)/config.sh
 
 for class in $CLASS
 do
-OUT=/home/cquest/osmose/insee_bano-france-$class.xml.gz
+OUT=${OUTDIR}/insee_bano-france-$class.xml.gz
 
 echo "class: $class"
 
@@ -123,7 +123,7 @@ echo "  </analyser>
 
 echo ""
 
-curl -v --form source='opendata_xref-france' --form code="$OSMOSEPASS" --form content=@$OUT -H 'Host: osmose.openstreetmap.fr' http://osmose.openstreetmap.fr/control/send-update
+curl -v --form source='opendata_xref-france' --form code="$OSMOSEPASS" --form content=@$OUT -H 'Host: osmose.openstreetmap.fr' ${FRONTEND_API}
 
 done
 
@@ -209,5 +209,5 @@ done
 echo "  </analyser>
 </analysers>" | gzip -9 >> $OUT
 
-curl -s --request POST --form source='opendata_xref-france' --form code="$OSMOSEPASS" --form content=@$OUT -H 'Host: osmose.openstreetmap.fr' http://osmose.openstreetmap.fr/control/send-update
+curl -s --request POST --form source='opendata_xref-france' --form code="$OSMOSEPASS" --form content=@$OUT -H 'Host: osmose.openstreetmap.fr' ${FRONTEND_API}
 

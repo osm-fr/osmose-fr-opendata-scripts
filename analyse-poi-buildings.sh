@@ -1,5 +1,5 @@
 . $(dirname $0)/config.sh
-OUT=/home/cquest/osmose/insee_poi_near_building-france.xml
+OUT=${OUTDIR}/insee_poi_near_building-france.xml
 
 echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 <analysers timestamp=\"`date -u +%Y-%m-%dT%H:%M:%SZ`\">
