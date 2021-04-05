@@ -1,1 +1,8 @@
+.git
+*.gz
+*.json
+*.gz.properties
+*.zip
+*.mid
+*.mif
 config.sh
