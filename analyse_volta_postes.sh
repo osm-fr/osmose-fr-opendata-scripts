@@ -7,13 +7,14 @@ rm -f $OUT
 echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 <analysers timestamp=\"`date -u +%Y-%m-%dT%H:%M:%SZ`\">
   <analyser timestamp=\"`date -u +%Y-%m-%dT%H:%M:%SZ`\">
-    <class item=\"8281\" tag=\"power\" id=\"$ERROR\" level=\"3\">
-      <classtext lang=\"fr\" title=\"(TEST) poste de transformation HT/BT à intégrer\" />
-      <classtext lang=\"en\" title=\"(TEST) power=substation from opendata\" />
+    <class item=\"8280\" tag=\"power\" id=\"$ERROR\" level=\"3\">
+      <classtext lang=\"fr\" title=\"poste de transformation HT/BT à intégrer\" />
+      <classtext lang=\"en\" title=\"power=substation from opendata\" />
     </class>
 "| gzip -9 >> $OUT
 
 for DEP in $(seq -w 01 19) 2A 2B $(seq 21 95)
+#for DEP in 00
 do
   echo "$DEP"
   for DEPCOM in $(psql osm -tA -c "select insee from osm_admin_fr where insee like '$DEP%'")
@@ -31,7 +32,7 @@ select format('   <error class=\"$ERROR\" subclass=\"1\" ><location lat=\"%s\" l
     operator,
     case
         when underground is null then '<tag action=\"modify\" k=\"building\" v=\"transformer_tower\" />'
-	when m2<8 then '<tag action=\"modify\" k=\"man_made\" v=\"street_cabinet\" /><tag action=\"modify\" k=\"utility\" v=\"power\" /><tag action=\"delete\" k=\"building\" />'
+	when m2<4 then '<tag action=\"modify\" k=\"man_made\" v=\"street_cabinet\" /><tag action=\"modify\" k=\"utility\" v=\"power\" /><tag action=\"delete\" k=\"building\" />'
 	else '<tag action=\"create\" k=\"building\" v=\"service\" /><tag action=\"create\" k=\"service\" v=\"utility\" />'
     end)
 from (
