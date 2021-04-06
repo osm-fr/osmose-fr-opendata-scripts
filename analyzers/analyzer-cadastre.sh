@@ -14,10 +14,9 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 " > $OUT
 
 for d in `seq -w 1 19` 2A 2B `seq 21 95`
-#for d in 77 78 89 `seq 91 95`
 do
   echo $d
-  ${PSQL} osm -c "
+  ${PSQL} -c "
   select format('<error class=\"40\" subclass=\"1\"><location lat=\"%s\" lon=\"%s\" /><text lang=\"fr\" value=\"jusque %s m - %s\" /><text lang=\"en\" value=\"up to %s m - %s\" /></error>',
     round(lat::numeric,6),
     round(lon::numeric,6),

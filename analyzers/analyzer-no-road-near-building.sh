@@ -18,7 +18,7 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 for DEP in 14 28 89 75 77 78 91 92 93 94 95
 do
   echo $DEP
-${PSQL} osm -c "
+${PSQL} -c "
 select format('<error class=\"11\" subclass=\"1\"><location lat=\"%s\" lon=\"%s\" /><text lang=\"fr\" value=\"\" /><text lang=\"en\" value=\"\" /></error>',
         lat,
 	lon)

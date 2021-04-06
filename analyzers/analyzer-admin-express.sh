@@ -15,7 +15,7 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 
 for d in `seq -w 1 97` 2A 2B; do
 echo $d
-${PSQL} osm -c "
+${PSQL} -c "
 select format('<error class=\"40\" subclass=\"1\"><location lat=\"%s\" lon=\"%s\" /><text lang=\"fr\" value=\"%s m - %s\" /></error>',
   round(st_y(geom)::numeric,6),
   round(st_x(geom)::numeric,6),

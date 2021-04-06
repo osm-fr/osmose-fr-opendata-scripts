@@ -18,7 +18,7 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 for DEP in $(seq -w 01 95) 2A 2B
 do
 echo -n "$DEP "
-PGOPTIONS='--client-min-messages=warning' ${PSQL} osm -qc "
+PGOPTIONS='--client-min-messages=warning' ${PSQL} -qc "
 SET enable_hashagg to 'off';
 SET max_parallel_workers_per_gather TO 0;
 

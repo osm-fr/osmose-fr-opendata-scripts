@@ -15,7 +15,7 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
     </class>
 "| gzip -9 >> $OUT
 
-PGOPTIONS='--client-min-messages=warning' ${PSQL} osm -qc "
+PGOPTIONS='--client-min-messages=warning' ${PSQL} -qc "
 SET enable_hashagg to 'off';
 SET max_parallel_workers_per_gather TO 0;
 

@@ -17,7 +17,7 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 for DEP in `seq -w 1 19` 2A 2B `seq 21 95` `seq 971 976`
 do
   echo $DEP
-${PSQL} osm -c "
+${PSQL} -c "
 select format('<error class=\"13\" subclass=\"1\"><location lat=\"%s\" lon=\"%s\" /><text lang=\"fr\" value=\"%s (%s)\" /><text lang=\"en\" value=\"%s (%s)\" /></error>',
         lat, lon, nom, fantoir, nom, fantoir)
 from

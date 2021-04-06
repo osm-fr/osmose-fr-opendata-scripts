@@ -19,10 +19,10 @@ for DEP in $(seq -w 01 19) 2A 2B $(seq 21 95)
 #for DEP in 00
 do
   echo "$DEP"
-  for DEPCOM in $(${PSQL} osm -tA -c "select insee from osm_admin_fr where insee like '$DEP%'")
+  for DEPCOM in $(${PSQL} -tA -c "select insee from osm_admin_fr where insee like '$DEP%'")
   do
     echo -n "."
-PGOPTIONS='--client-min-messages=warning' ${PSQL} osm -qc "
+PGOPTIONS='--client-min-messages=warning' ${PSQL} -qc "
 
 select format('   <error class=\"$ERROR\" subclass=\"1\" ><location lat=\"%s\" lon=\"%s\" /><way id=\"%s\"></way><text lang=\"fr\" value=\"%s\" /><fixes><fix><way id=\"%s\"><tag action=\"create\" k=\"power\" v=\"substation\" /><tag action=\"create\" k=\"substation\" v=\"minor_distribution\" /><tag action=\"create\" k=\"voltage\" v=\"20000\" /><tag action=\"create\" k=\"operator\" v=\"%s\" /><tag action=\"create\" k=\"source:power\" v=\"%s\" />%s</way></fix></fixes></error>',
     st_y(geom),

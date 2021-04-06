@@ -16,7 +16,7 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 
 for D in 77 89 94
 do
-PGOPTIONS='--client-min-messages=warning' ${PSQL} osm -qc "
+PGOPTIONS='--client-min-messages=warning' ${PSQL} -qc "
 SET statement_timeout = '300s';
 SET enable_hashagg to 'off';
 SET max_parallel_workers_per_gather TO 0;

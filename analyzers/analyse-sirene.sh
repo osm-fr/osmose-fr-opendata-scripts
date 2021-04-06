@@ -13,7 +13,7 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
     </class>
 " > $OUT
 
-PGOPTIONS='--client-min-messages=warning' ${PSQL} osm -qc "
+PGOPTIONS='--client-min-messages=warning' ${PSQL} -qc "
 select format('<error class=\"99\" subclass=\"1\"><location lat=\"%s\" lon=\"%s\"/><text lang=\"fr\" value=\"%s, %s - SIRET:%s%s\"/></error>',
   latitude, longitude, replace(replace(nomen_long,'\"',''),'&','&amp;'), l4_normalisee, siren,nic) from sirene_geo s
   left join planet_osm_point n on (n.way && st_expand(geo,200) and n.amenity='pharmacy')

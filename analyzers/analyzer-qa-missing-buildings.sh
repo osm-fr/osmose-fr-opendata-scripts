@@ -13,7 +13,7 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
     </class>
 " > $OUT
 
-${PSQL} osm -c "
+${PSQL} -c "
 create temporary table no_building as SELECT
   m.osm_id, m.insee, m.nb, m.name, m.way, count(*) as total                                                                                                           FROM                
 (   SELECT

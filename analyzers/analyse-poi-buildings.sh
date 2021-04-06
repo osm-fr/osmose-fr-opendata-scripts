@@ -14,7 +14,7 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 " > $OUT
 
 for d in 01 02 03 04 05 06 07 08 09 `seq 10 19` 2A 2B `seq 21 95` `seq 971 976` ; do
-PGOPTIONS='--client-min-messages=warning' ${PSQL} osm -qc "
+PGOPTIONS='--client-min-messages=warning' ${PSQL} -qc "
 select format('<error class=\"60\" subclass=\"1\"><location lat=\"%s\" lon=\"%s\" /><text lang=\"fr\" value=\"%s=%s à %sm du bâtiment\" /><node id=\"%s\"></node></error>',
 	round(st_y(st_transform(st_centroid(p.way),4326))::numeric,6),
 	round(st_x(st_transform(st_centroid(p.way),4326))::numeric,6),
