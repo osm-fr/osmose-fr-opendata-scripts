@@ -2,8 +2,7 @@
 
 source $(dirname $0)/../config.sh
 
-DEPS="$(seq -format "%02.0f" 1 19) 2A 2B $(seq 21 95) $(seq 971 974) 976"
-if [[ $# -gt 0 ]]; then DEPS="$1"; fi
+DEPS="$(seq -w 1 19) 2A 2B $(seq 21 95) $(seq 971 974) 976"
 
 ${PSQL} osm -c "truncate cadastre_voies"
 
