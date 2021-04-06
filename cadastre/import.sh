@@ -2,8 +2,6 @@
 
 source $(dirname $0)/../config.sh
 
-DEPS="$(seq -w 1 19) 2A 2B $(seq 21 95) $(seq 971 974) 976"
-
 ${PSQL} -c "truncate cadastre_voies"
 
 mkdir -p data

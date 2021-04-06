@@ -15,8 +15,7 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
     </class>
 "| gzip -9 >> $OUT
 
-for DEP in $(seq -w 01 19) 2A 2B $(seq 21 95)
-#for DEP in 00
+for DEP in $DEPS_METRO
 do
   echo "$DEP"
   for DEPCOM in $(${PSQL} -tA -c "select insee from osm_admin_fr where insee like '$DEP%'")

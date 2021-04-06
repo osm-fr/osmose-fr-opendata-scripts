@@ -14,7 +14,7 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
     </class>
 " > $OUT
 
-for DEP in `seq -w 1 19` 2A 2B `seq 21 95` `seq 971 976`
+for DEP in $DEPS
 do
   echo $DEP
 ${PSQL} -c "

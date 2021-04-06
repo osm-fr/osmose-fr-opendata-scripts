@@ -15,7 +15,7 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
     </class>
 "| gzip -9 >> $OUT
 
-for DEP in $(seq -w 01 95) 2A 2B
+for DEP in $DEPS_METRO
 do
 echo -n "$DEP "
 PGOPTIONS='--client-min-messages=warning' ${PSQL} -qc "

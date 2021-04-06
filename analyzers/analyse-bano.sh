@@ -2,8 +2,8 @@
 
 source $(dirname $0)/../config.sh
 
-CLASS="30  31 32 33"
-DEPS="`seq -w 01 19` 2A 2B `seq 21 95` `seq 971 976`"
+
+CLASS="30 31 32 33"
 
 # vue matérialisée des manques OSM d'après BANO
 PGOPTIONS='--client-min-messages=warning' ${PSQL} -c "
@@ -150,7 +150,7 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
     </class>
 " | gzip -9 > $OUT
 
-for d in `seq -w 01 19` 2A 2B `seq 21 95` `seq 971 976` ;do
+for d in $DEPS; do
 PGOPTIONS='--client-min-messages=warning' ${PSQL} -qc "
 SET statement_timeout = '120s';
 SET enable_hashagg to 'off';

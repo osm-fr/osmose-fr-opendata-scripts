@@ -13,7 +13,7 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
     </class>
 " > $OUT
 
-for d in `seq -w 1 95` 2A 2B
+for d in $DEPS_METRO
 do
 echo $d
 ${PSQL} -c "

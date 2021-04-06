@@ -13,7 +13,7 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
     </class>
 " > $OUT
 
-for d in `seq -w 1 97` 2A 2B; do
+for d in $DEPS_METRO; do
 echo $d
 ${PSQL} -c "
 select format('<error class=\"40\" subclass=\"1\"><location lat=\"%s\" lon=\"%s\" /><text lang=\"fr\" value=\"%s m - %s\" /></error>',
