@@ -9,7 +9,7 @@ rm -f $OUT
 echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 <analysers timestamp=\"`date -u +%Y-%m-%dT%H:%M:%SZ`\">
   <analyser timestamp=\"`date -u +%Y-%m-%dT%H:%M:%SZ`\">
-    <class item=\"7171\" tag=\"waterway\" id=\"$ERROR\" level=\"3\">
+    <class item=\"7171\" tag=\"waterway\" id=\"$ERROR\" level=\"3\" source=\"$(link_to_github $LINENO)\">
       <classtext lang=\"fr\" title=\"(TEST) cours d'eau potentiellement manquant à proximité\" />
       <classtext lang=\"en\" title=\"(TEST) possibly missing waterway in the area\" />
     </class>

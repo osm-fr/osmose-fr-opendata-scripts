@@ -7,7 +7,7 @@ OUT="${DIR_WORK}/insee_batiments-france.xml"
 echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 <analysers timestamp=\"`date -u +%Y-%m-%dT%H:%M:%SZ`\">
   <analyser timestamp=\"`date -u +%Y-%m-%dT%H:%M:%SZ`\">
-    <class item=\"7170\" tag=\"buildings\" id=\"50\" level=\"3\">
+    <class item=\"7170\" tag=\"buildings\" id=\"50\" level=\"3\" source=\"$(link_to_github $LINENO)\">
       <classtext lang=\"fr\" title=\"bâtiments non importés sur la commune\" />
       <classtext lang=\"en\" title=\"cadastre buildings not yet imported\" />
     </class>

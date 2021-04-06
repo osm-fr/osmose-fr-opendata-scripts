@@ -7,7 +7,7 @@ OUT="${DIR_WORK}/admin-express.xml"
 echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 <analysers timestamp=\"`date -u +%Y-%m-%dT%H:%M:%SZ`\">
   <analyser timestamp=\"`date -u +%Y-%m-%dT%H:%M:%SZ`\">
-    <class item=\"7170\" tag=\"boundary\" id=\"40\" level=\"3\">
+    <class item=\"7170\" tag=\"boundary\" id=\"40\" level=\"3\" source=\"$(link_to_github $LINENO)\">
       <classtext lang=\"fr\" title=\"limite admin décalée ?\" />
       <classtext lang=\"en\" title=\"misplaced admin boundary ?\" />
     </class>

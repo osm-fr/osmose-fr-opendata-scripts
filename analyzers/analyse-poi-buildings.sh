@@ -7,7 +7,7 @@ OUT=${DIR_WORK}/insee_poi_near_building-france.xml
 echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 <analysers timestamp=\"`date -u +%Y-%m-%dT%H:%M:%SZ`\">
   <analyser timestamp=\"`date -u +%Y-%m-%dT%H:%M:%SZ`\">
-    <class item=\"7170\" tag=\"highway\" id=\"60\" level=\"3\">
+    <class item=\"7170\" tag=\"highway\" id=\"60\" level=\"3\" source=\"$(link_to_github $LINENO)\">
       <classtext lang=\"fr\" title=\"POI proche d'un bâtiment\" />
       <classtext lang=\"en\" title=\"POI near building\" />
     </class>

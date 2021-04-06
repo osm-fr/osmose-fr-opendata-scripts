@@ -9,7 +9,7 @@ rm -f $OUT
 echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 <analysers timestamp=\"`date -u +%Y-%m-%dT%H:%M:%SZ`\">
   <analyser timestamp=\"`date -u +%Y-%m-%dT%H:%M:%SZ`\">
-    <class item=\"7040\" tag=\"power\" id=\"$ERROR\" level=\"3\">
+    <class item=\"7040\" tag=\"power\" id=\"$ERROR\" level=\"3\" source=\"$(link_to_github $LINENO)\">
       <classtext lang=\"fr\" title=\"ligne électrique HT (power=line) manquante à proximité\" />
       <classtext lang=\"en\" title=\"missing power=line in the area\" />
     </class>

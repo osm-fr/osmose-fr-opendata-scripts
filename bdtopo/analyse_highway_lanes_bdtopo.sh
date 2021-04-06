@@ -9,7 +9,7 @@ rm -f $OUT
 echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 <analysers timestamp=\"`date -u +%Y-%m-%dT%H:%M:%SZ`\">
   <analyser timestamp=\"`date -u +%Y-%m-%dT%H:%M:%SZ`\">
-    <class item=\"7170\" tag=\"highway\" id=\"$ERROR\" level=\"3\">
+    <class item=\"7170\" tag=\"highway\" id=\"$ERROR\" level=\"3\" source=\"$(link_to_github $LINENO)\">
       <classtext lang=\"fr\" title=\"lanes=* manquant sur route à plus de 2 voies (BD Topo)\" />
       <classtext lang=\"en\" title=\"lanes=* missing on highway with more than 2 lanes (BD Topo)\" />
     </class>

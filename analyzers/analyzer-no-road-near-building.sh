@@ -9,7 +9,7 @@ DEP=$1
 echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 <analysers timestamp=\"`date -u +%Y-%m-%dT%H:%M:%SZ`\">
   <analyser timestamp=\"`date -u +%Y-%m-%dT%H:%M:%SZ`\">
-    <class item=\"7170\" tag=\"highway\" id=\"11\" level=\"2\">
+    <class item=\"7170\" tag=\"highway\" id=\"11\" level=\"2\" source=\"$(link_to_github $LINENO)\">
       <classtext lang=\"fr\" title=\"bâtiment sans route à $DISTm\" />
       <classtext lang=\"en\" title=\"building without highway within 100m\" />
     </class>

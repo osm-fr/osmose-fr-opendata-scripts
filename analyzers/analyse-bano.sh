@@ -83,25 +83,25 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 " | gzip -9 > $OUT
 
 [ "$class" = "30" ] && echo "
-    <class item=\"7170\" tag=\"highway\" id=\"30\" level=\"3\">
+    <class item=\"7170\" tag=\"highway\" id=\"30\" level=\"3\" source=\"$(link_to_github $LINENO)\">
       <classtext lang=\"fr\" title=\"name=* ou route potentiellement manquante à proximité\" />
       <classtext lang=\"en\" title=\"name=* or possibly missing highway in the area\" />
     </class>
 "| gzip -9 >> $OUT
 [ "$class" = "31" ] && echo "
-    <class item=\"7170\" tag=\"highway\" id=\"31\" level=\"3\">
+    <class item=\"7170\" tag=\"highway\" id=\"31\" level=\"3\" source=\"$(link_to_github $LINENO)\">
       <classtext lang=\"fr\" title=\"name=* à modifier sur highway ?\" />
       <classtext lang=\"en\" title=\"name=* to change on highway ?\" />
     </class>
 "| gzip -9 >> $OUT
 [ "$class" = "32" ] && echo "
-    <class item=\"7170\" tag=\"highway\" id=\"32\" level=\"3\">
+    <class item=\"7170\" tag=\"highway\" id=\"32\" level=\"3\" source=\"$(link_to_github $LINENO)\">
       <classtext lang=\"fr\" title=\"name=* à ajouter sur highway ?\" />
       <classtext lang=\"en\" title=\"name=* to add on highway ?\" />
     </class>
 "| gzip -9 >> $OUT
 [ "$class" = "33" ] && echo "
-    <class item=\"7170\" tag=\"highway\" id=\"33\" level=\"3\">
+    <class item=\"7170\" tag=\"highway\" id=\"33\" level=\"3\" source=\"$(link_to_github $LINENO)\">
       <classtext lang=\"fr\" title=\"route manquante à proximité ?\" />
       <classtext lang=\"en\" title=\"missing highway in the area ?\" />
     </class>
@@ -132,19 +132,19 @@ exit
 echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 <analysers timestamp=\"`date -u +%Y-%m-%dT%H:%M:%SZ`\">
   <analyser timestamp=\"`date -u +%Y-%m-%dT%H:%M:%SZ`\">
-    <class item=\"7170\" tag=\"highway\" id=\"30\" level=\"3\">
+    <class item=\"7170\" tag=\"highway\" id=\"30\" level=\"3\" source=\"$(link_to_github $LINENO)\">
       <classtext lang=\"fr\" title=\"name=* ou route potentiellement manquante à proximité\" />
       <classtext lang=\"en\" title=\"name=* or possibly missing highway in the area\" />
     </class>
-    <class item=\"7170\" tag=\"highway\" id=\"32\" level=\"3\">
+    <class item=\"7170\" tag=\"highway\" id=\"32\" level=\"3\" source=\"$(link_to_github $LINENO)\">
       <classtext lang=\"fr\" title=\"name=* à ajouter sur highway ?\" />
       <classtext lang=\"en\" title=\"name=* to add on highway ?\" />
     </class>
-    <class item=\"7170\" tag=\"highway\" id=\"31\" level=\"3\">
+    <class item=\"7170\" tag=\"highway\" id=\"31\" level=\"3\" source=\"$(link_to_github $LINENO)\">
       <classtext lang=\"fr\" title=\"name=* à modifier sur highway ?\" />
       <classtext lang=\"en\" title=\"name=* to change on highway ?\" />
     </class>
-    <class item=\"7170\" tag=\"highway\" id=\"33\" level=\"3\">
+    <class item=\"7170\" tag=\"highway\" id=\"33\" level=\"3\" source=\"$(link_to_github $LINENO)\">
       <classtext lang=\"fr\" title=\"route manquante à proximité ?\" />
       <classtext lang=\"en\" title=\"missing highway in the area ?\" />
     </class>

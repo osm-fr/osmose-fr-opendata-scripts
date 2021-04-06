@@ -7,7 +7,7 @@ OUT="${DIR_WORK}/insee_route500-france-lanes.xml"
 echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 <analysers timestamp=\"`date -u +%Y-%m-%dT%H:%M:%SZ`\">
   <analyser timestamp=\"`date -u +%Y-%m-%dT%H:%M:%SZ`\">
-    <class item=\"7170\" tag=\"highway\" id=\"20\" level=\"3\">
+    <class item=\"7170\" tag=\"highway\" id=\"20\" level=\"3\" source=\"$(link_to_github $LINENO)\">
       <classtext lang=\"fr\" title=\"lanes=* manquant sur voie avec plus de deux voies dans Route500\" />
       <classtext lang=\"en\" title=\"lanes=* missing on way with more than 2 lanes in Route500\" />
     </class>

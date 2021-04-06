@@ -7,7 +7,7 @@ OUT=${DIR_WORK}/insee_sirene-france.xml
 echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 <analysers timestamp=\"`date -u +%Y-%m-%dT%H:%M:%SZ`\">
   <analyser timestamp=\"`date -u +%Y-%m-%dT%H:%M:%SZ`\">
-    <class item=\"7170\" tag=\"highway\" id=\"99\" level=\"3\">
+    <class item=\"7170\" tag=\"highway\" id=\"99\" level=\"3\" source=\"$(link_to_github $LINENO)\">
       <classtext lang=\"fr\" title=\"Pharmacie manquante (SIRENE)\" />
       <classtext lang=\"en\" title=\"Missing pharmacy (SIRENE)\" />
     </class>

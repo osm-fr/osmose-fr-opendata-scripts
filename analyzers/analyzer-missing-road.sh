@@ -7,7 +7,7 @@ OUT="${DIR_WORK}/missing-road-near-building.xml"
 echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 <analysers timestamp=\"`date -u +%Y-%m-%dT%H:%M:%SZ`\">
   <analyser timestamp=\"`date -u +%Y-%m-%dT%H:%M:%SZ`\">
-    <class item=\"7170\" tag=\"boundary\" id=\"11\" level=\"3\">
+    <class item=\"7170\" tag=\"boundary\" id=\"11\" level=\"3\" source=\"$(link_to_github $LINENO)\">
       <classtext lang=\"fr\" title=\"route manquante pour accès au bâtiment\" />
       <classtext lang=\"en\" title=\"no road to access building\" />
     </class>

@@ -7,7 +7,7 @@ OUT="${DIR_WORK}/insee_routes-france.xml"
 echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 <analysers timestamp=\"`date -u +%Y-%m-%dT%H:%M:%SZ`\">
   <analyser timestamp=\"`date -u +%Y-%m-%dT%H:%M:%SZ`\">
-    <class item=\"7170\" tag=\"highway\" id=\"1\" level=\"2\">
+    <class item=\"7170\" tag=\"highway\" id=\"1\" level=\"2\" source=\"$(link_to_github $LINENO)\">
       <classtext lang=\"fr\" title=\"route potentiellement manquante à proximité\" />
       <classtext lang=\"en\" title=\"possibly missing highway in the area\" />
     </class>
@@ -34,7 +34,7 @@ curl -s --request POST --form source='opendata_xref-france' --form code="$OSMOSE
 echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 <analysers timestamp=\"`date -u +%Y-%m-%dT%H:%M:%SZ`\">
   <analyser timestamp=\"`date -u +%Y-%m-%dT%H:%M:%SZ`\">
-    <class item=\"7170\" tag=\"highway\" id=\"10\" level=\"3\">
+    <class item=\"7170\" tag=\"highway\" id=\"10\" level=\"3\" source=\"$(link_to_github $LINENO)\">
       <classtext lang=\"fr\" title=\"route potentiellement manquante à proximité\" />
       <classtext lang=\"en\" title=\"possibly missing highway in the area\" />
     </class>

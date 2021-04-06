@@ -7,7 +7,7 @@ OUT="${DIR_WORK}/roads-similar-name-ref.xml"
 echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 <analysers timestamp=\"`date -u +%Y-%m-%dT%H:%M:%SZ`\">
   <analyser timestamp=\"`date -u +%Y-%m-%dT%H:%M:%SZ`\">
-    <class item=\"7170\" tag=\"highway\" id=\"3\" level=\"3\">
+    <class item=\"7170\" tag=\"highway\" id=\"3\" level=\"3\" source=\"$(link_to_github $LINENO)\">
       <classtext lang=\"fr\" title=\"ref=*/name=* similaires sur highway\" />
       <classtext lang=\"en\" title=\"similar ref=*/name=* on highway\" />
     </class>

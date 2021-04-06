@@ -8,7 +8,7 @@ DIST=20
 echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 <analysers timestamp=\"`date -u +%Y-%m-%dT%H:%M:%SZ`\">
   <analyser timestamp=\"`date -u +%Y-%m-%dT%H:%M:%SZ`\">
-    <class item=\"7170\" tag=\"highway\" id=\"13\" level=\"2\">
+    <class item=\"7170\" tag=\"highway\" id=\"13\" level=\"2\" source=\"$(link_to_github $LINENO)\">
       <classtext lang=\"fr\" title=\"voirie cadastre sans route à $DIST m\" />
       <classtext lang=\"en\" title=\"cadastre, no highway within $DIST m\" />
     </class>
