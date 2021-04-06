@@ -10,5 +10,5 @@ export PSQL="${PSQL} --host=\"${DB_HOST}\" --port=\"${PSQL_PORT}\" --username=\"
 
 export LINK_TO_GITHUB="https://github.com/osm-fr/osmose-fr-opendata-scrips/blob/master/"
 link_to_github() {
-    echo "${LINK_TO_GITHUB}$(realpath --relative-to="." $0)#L$1)"
+    echo -n "${LINK_TO_GITHUB}$(realpath --relative-to="." $0)#L$1)"
 }
