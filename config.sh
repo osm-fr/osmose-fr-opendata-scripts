@@ -6,13 +6,13 @@ export DB_HOST="osm"
 export DB_USER="osm"
 export DB_PASSWORD="osm"
 export DB_BASE="osm"
-export PSQL="${PSQL} --host=\"${DB_HOST}\" --port=\"${PSQL_PORT}\" --username=\"${DB_USER}\" \"${DB_BASE}\" "
+export PSQL="psql --host=\"${DB_HOST}\" --username=\"${DB_USER}\" \"${DB_BASE}\" "
 
 export DEPS_METRO="`seq -w 01 19` 2A 2B `seq 21 95`"
 export DEPS_DOM="`seq 971 976`"
 export DEPS="$DEPS_METRO $DEPS_DOM"
 
-export LINK_TO_GITHUB="https://github.com/osm-fr/osmose-fr-opendata-scrips/blob/master/"
+export LINK_TO_GITHUB="https://github.com/osm-fr/osmose-fr-opendata-scripts/blob/master/"
 link_to_github() {
     echo -n "${LINK_TO_GITHUB}$(realpath --relative-to="." $0)#L$1)"
 }
