@@ -5,4 +5,4 @@
 *.zip
 *.mid
 *.mif
-config.sh
+osmose_config_password.sh
