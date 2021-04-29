@@ -1,4 +1,7 @@
-. $(dirname $0)/config.sh
+#!/bin/bash
+
+source $(dirname $0)/config.sh
+
 OUT=/home/cquest/public_html/insee_batiments-france.xml
 
 echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
@@ -43,5 +46,4 @@ echo "
   </analyser>
 </analysers>" >> $OUT
 
-curl -s --request POST --form source='opendata_xref-france' --form code="$OSMOSEPASS" --form content=@$OUT http://osmose.openstreetmap.fr/control/send-update
-#/usr/local/bin/http --timeout=300 --form POST http://dev.osmose.openstreetmap.fr/control/send-update source='opendata_xref-france' code="$OSMOSEPASS" content@$OUT
+curl -s --request POST --form source='opendata_xref-france' --form code="$OSMOSEPASS" --form content=@$OUT "${URL_FRONTEND_UPDATE}"

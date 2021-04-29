@@ -1,5 +1,7 @@
 #! /bin/bash
 
+source $(dirname $0)/config.sh
+
 CLASS="30  31 32 33"
 DEPS="`seq -w 01 19` 2A 2B `seq 21 95` `seq 971 976`"
 #DEPS='77 89 94'
@@ -70,8 +72,6 @@ select fantoir, case
   ) as m order by l_noname desc, l desc) as e where er != '';
 "
 
-source $(dirname $0)/config.sh
-
 for class in $CLASS
 do
 OUT=/home/cquest/osmose/insee_bano-france-$class.xml.gz
@@ -123,7 +123,7 @@ echo "  </analyser>
 
 echo ""
 
-curl -v --form source='opendata_xref-france' --form code="$OSMOSEPASS" --form content=@$OUT -H 'Host: osmose.openstreetmap.fr' http://osm153.openstreetmap.fr/control/send-update
+curl -v --form source='opendata_xref-france' --form code="$OSMOSEPASS" --form content=@$OUT -H 'Host: osmose.openstreetmap.fr' "${URL_FRONTEND_UPDATE}"
 
 done
 
@@ -209,5 +209,4 @@ done
 echo "  </analyser>
 </analysers>" | gzip -9 >> $OUT
 
-curl -s --request POST --form source='opendata_xref-france' --form code="$OSMOSEPASS" --form content=@$OUT -H 'Host: osmose.openstreetmap.fr' http://osm153.openstreetmap.fr/control/send-update
-
+curl -s --request POST --form source='opendata_xref-france' --form code="$OSMOSEPASS" --form content=@$OUT -H 'Host: osmose.openstreetmap.fr' "${URL_FRONTEND_UPDATE}"

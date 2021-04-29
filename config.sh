@@ -9,3 +9,5 @@ else
   echo "file ${osmose_config_password} not found. setting empty password"
   export OSMOSEPASS=""
 fi
+
+export URL_FRONTEND_UPDATE="http://osmose.openstreetmap.fr/control/send-update"

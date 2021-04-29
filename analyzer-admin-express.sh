@@ -1,4 +1,7 @@
-. $(dirname $0)/config.sh
+#!/bin/bash
+
+source $(dirname $0)/config.sh
+
 OUT=/home/cquest/public_html/admin-express.xml
 OUT=admin-express.xml
 
@@ -27,4 +30,4 @@ echo "
   </analyser>
 </analysers>" >> $OUT
 
-curl -s --request POST --compressed --form source='opendata_xref-france' --form code="$OSMOSEPASS" --form content=@$OUT http://osmose.openstreetmap.fr/control/send-update
+curl -s --request POST --compressed --form source='opendata_xref-france' --form code="$OSMOSEPASS" --form content=@$OUT "${URL_FRONTEND_UPDATE}"

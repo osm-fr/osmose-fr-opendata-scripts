@@ -1,5 +1,7 @@
 #! /bin/bash
 
+source $(dirname $0)/../config.sh
+
 OUT=7170_20_lanes.xml.gz
 ERROR=20
 rm -f $OUT
@@ -47,8 +49,7 @@ from (
 echo "  </analyser>
 </analysers>" | gzip -9 >> $OUT
 
-source ../config.sh
-curl --form source='opendata_xref-france' --form code="$OSMOSEPASS" --form content=@$OUT -H 'Host: osmose.openstreetmap.fr' http://osm153.openstreetmap.fr/control/send-update
+curl --form source='opendata_xref-france' --form code="$OSMOSEPASS" --form content=@$OUT -H 'Host: osmose.openstreetmap.fr' "${URL_FRONTEND_UPDATE}"
 sleep 30
-curl --form source='opendata_xref-france' --form code="$OSMOSEPASS" --form content=@$OUT -H 'Host: osmose.openstreetmap.fr' http://osm153.openstreetmap.fr/control/send-update
+curl --form source='opendata_xref-france' --form code="$OSMOSEPASS" --form content=@$OUT -H 'Host: osmose.openstreetmap.fr' "${URL_FRONTEND_UPDATE}"
 
