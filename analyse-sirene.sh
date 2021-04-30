@@ -24,5 +24,5 @@ select format('<error class=\"99\" subclass=\"1\"><location lat=\"%s\" lon=\"%s\
 echo "  </analyser>
 </analysers>" >> $OUT
 
-curl -s --request POST --form source='opendata_xref-france' --form code="$OSMOSEPASS" --form content=@$OUT "${URL_FRONTEND_UPDATE}"
+send_frontend $OUT
 

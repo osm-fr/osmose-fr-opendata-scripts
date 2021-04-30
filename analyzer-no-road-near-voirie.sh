@@ -40,4 +40,4 @@ echo "
 </analysers>" >> $OUT
 
 echo "Envoi"
-curl -s --request POST --form source='opendata_xref-france' --form code="$OSMOSEPASS" --form content=@$OUT "${URL_FRONTEND_UPDATE}"
+send_frontend $OUT
