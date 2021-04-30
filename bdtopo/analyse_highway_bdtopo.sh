@@ -59,9 +59,4 @@ done
 echo "  </analyser>
 </analysers>" | gzip -9 >> $OUT
 
-#exit
-
-curl --form source="opendata_xref-france" --form code="$OSMOSEPASS" --form content=@$OUT -H 'Host: osmose.openstreetmap.fr' "${URL_FRONTEND_UPDATE}"
-sleep 30
-curl --form source="opendata_xref-france" --form code="$OSMOSEPASS" --form content=@$OUT -H 'Host: osmose.openstreetmap.fr' "${URL_FRONTEND_UPDATE}"
-
+send_frontend $OUT

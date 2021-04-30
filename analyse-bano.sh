@@ -127,7 +127,7 @@ echo "  </analyser>
 echo ""
 
 echo "sending to osmose frontend"
-curl -v --form source='opendata_xref-france' --form code="$OSMOSEPASS" --form content=@$OUT -H 'Host: osmose.openstreetmap.fr' "${URL_FRONTEND_UPDATE}" && echo -e "\n\rcurl ok" || echo -e "\n\rcurl ko"
+send_frontend $OUT
 
 done
 
@@ -213,4 +213,4 @@ done
 echo "  </analyser>
 </analysers>" | gzip -9 >> $OUT
 
-curl -s --request POST --form source='opendata_xref-france' --form code="$OSMOSEPASS" --form content=@$OUT -H 'Host: osmose.openstreetmap.fr' "${URL_FRONTEND_UPDATE}"
+send_frontend $OUT
