@@ -37,7 +37,11 @@ from (
             (st_dumppoints(st_linesubstring(geometrie,0.1,0.9))).geom,
             st_lineinterpolatepoint(geometrie, 0.5) as center
         from
-            osm_departements d
+            (
+                select st_subdivide(geom,1000) as geom
+                from osm_departements
+                where insee='$DEP'
+            ) as d
         join
             bdtopo_troncon_de_route t
         on (
@@ -45,8 +49,7 @@ from (
             AND st_intersects(d.geom, ST_LineInterpolatePoint(t.geometrie,0.5))
         )
         where
-            d.insee = '$DEP'
-            AND cpx_numero is not null
+            cpx_numero is not null
             and nature not in ('Rond-point','Bretelle')
             and st_npoints(geometrie)>10
     ) as i
