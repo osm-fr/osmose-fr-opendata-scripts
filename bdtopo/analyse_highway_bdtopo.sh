@@ -16,23 +16,27 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 "| gzip -9 >> $OUT
 
 for DEP in $(seq -w 01 95) 2A 2B
+#for DEP in 90
 do
 echo -n "$DEP "
 PGOPTIONS='--client-min-messages=warning' psql osm -qc "
 SET enable_hashagg to 'off';
 SET max_parallel_workers_per_gather TO 0;
 
-select format('<error class=\"$ERROR\" subclass=\"1\" ><infos id=\"%s\" /><location lat=\"%s\" lon=\"%s\" /><text lang=\"fr\" value=\"%s\" /></error>',
-    st_geohash(geom),
+select format('<error class=\"$ERROR\" subclass=\"1\" ><infos id=\"%s\" /><location lat=\"%s\" lon=\"%s\" /></error>',
+    id,
     st_y(geom),
-    st_x(geom),
-    nom)
+    st_x(geom))
 from (
     select
+        cleabs as id,
         ST_LineInterpolatePoint(st_force2d(geometrie),0.5) as geom,
         nom_1_gauche as nom
-    from
-	    osm_departements d
+    from (
+        select st_subdivide(geom,1000) as geom
+        from osm_departements
+        where insee='$DEP'
+    ) as d
     join
         bdtopo_troncon_de_route t
     on (
@@ -45,8 +49,7 @@ from (
             and st_dwithin(ST_LineInterpolatePoint(t.geometrie,0.5)::geography, st_Transform(h.way,4326)::geography, 20)
             and h.highway is not null)
     where
-	d.insee = '$DEP'
-	AND (t.importance < '3' or t.nature like 'Route à%' and t.nom_1_gauche !='')
+	(t.importance < '3' or t.nature like 'Route à%' and t.nom_1_gauche !='')
         AND h.way is null
 ) as error;
 
@@ -55,6 +58,8 @@ done
 
 echo "  </analyser>
 </analysers>" | gzip -9 >> $OUT
+
+#exit
 
 curl --form source="opendata_xref-france" --form code="$OSMOSEPASS" --form content=@$OUT -H 'Host: osmose.openstreetmap.fr' "${URL_FRONTEND_UPDATE}"
 sleep 30
