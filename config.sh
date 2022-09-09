@@ -10,4 +10,4 @@ else
   export OSMOSEPASS=""
 fi
 
-export URL_FRONTEND_UPDATE="http://osmose.openstreetmap.fr/control/send-update"
+export URL_FRONTEND_UPDATE="https://osmose.openstreetmap.fr/control/send-update"
