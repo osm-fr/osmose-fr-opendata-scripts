@@ -34,5 +34,5 @@ echo "
   </analyser>
 </analysers>" >> $OUT
 
-curl -s --request POST --form source='opendata_xref-france' --form code="$OSMOSEPASS" --form content=@$OUT http://dev.osmose.openstreetmap.fr/control/send-update
+curl -s --request POST --form source='opendata_xref-france' --form code="$OSMOSEPASS" --form content=@$OUT https://dev.osmose.openstreetmap.fr/control/send-update
 
