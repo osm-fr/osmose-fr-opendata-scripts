@@ -1,0 +1,47 @@
+#! /bin/bash
+
+source $(dirname $0)/../config.sh
+
+OUT=7170_95_decalage.xml.gz
+ERROR=95
+rm -f $OUT
+
+echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<analysers timestamp=\"`date -u +%Y-%m-%dT%H:%M:%SZ`\">
+  <analyser timestamp=\"`date -u +%Y-%m-%dT%H:%M:%SZ`\">
+    <class item=\"7170\" tag=\"highway\" id=\"$ERROR\" level=\"3\">
+      <classtext lang=\"fr\" title=\"(TEST) Itinéraire de randonnée manquant à proximité (PDIPR)\" />
+      <classtext lang=\"en\" title=\"(TEST) Missing route=hiking in this area\" />
+    </class>
+"| gzip -9 > $OUT
+
+PGOPTIONS='--client-min-messages=warning' psql osm -qc "
+
+select format('<error class=\"$ERROR\" subclass=\"1\" ><infos id=\"%s\" /><location lat=\"%s\" lon=\"%s\" /><text lang=\"fr\" value=\"%s\" /></error>',
+    st_geohash(geom),
+    st_y(geom),
+    st_x(geom),
+    nom)
+from (
+select nom, st_transform(st_closestpoint(wkb_geometry,st_centroid(unnest(ST_ClusterWithin((pt).geom,200)))),4326) as geom
+    FROM (
+        SELECT
+            nom, ST_Dumppoints(wkb_geometry) as pt, wkb_geometry
+        FROM
+            pdipr
+    ) i
+    LEFT JOIN planet_osm_line o
+    ON (
+        route='hiking'
+        AND ST_DWithin(ST_Transform((pt).geom,3857),way,200)
+        AND ST_DWithin(ST_Transform(way,4326)::geography, st_transform((pt).geom,4326)::geography, 25)
+    )
+    WHERE osm_id IS NULL
+    group by nom,wkb_geometry
+) as error;
+" -t | gzip -9 >> $OUT
+
+echo "  </analyser>
+</analysers>" | gzip -9 >> $OUT
+
+curl --form source='opendata_xref-france' --form code="$OSMOSEPASS" --form content=@$OUT -H 'Host: osmose.openstreetmap.fr' "${URL_FRONTEND_UPDATE}"
