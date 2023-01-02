@@ -21,8 +21,8 @@ send_frontend() {
     until [ "$tries" -ge 3 ]; do
         tries=$(( $tries + 1 ))
         echo "Try: '$tries'"
-        curl -s --request POST --form source='opendata_xref-france' --form code="$OSMOSEPASS" --form content=@$OUT -H 'Host: osmose.openstreetmap.fr' "${URL_FRONTEND_UPDATE}" && echo curl ok && break
-	echo faild. sleeping 300 sec
+        curl -s --request POST --form source='opendata_xref-france' --form code="$OSMOSEPASS" --form content=@$OUT -H 'Host: osmose.openstreetmap.fr' --max-time 1200 "${URL_FRONTEND_UPDATE}" && echo curl ok && break
+	echo failed. sleeping 300 sec
         sleep 300
     done
 
