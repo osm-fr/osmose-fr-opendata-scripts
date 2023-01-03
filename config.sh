@@ -16,6 +16,16 @@ send_frontend() {
     OUT=$1
     tries=0
 
+    echo check with xmllint
+    xmllint $OUT >/dev/null 2>/dev/null || {
+      echo "ERROR: invalid xml $OUT according to xmlling. trying to sed &"
+      NEWOUT="$(echo $OUT | sed "s/.gz$//g").seded.gz"
+      cat $OUT | gunzip | sed "s/&/\&amp;/g" | xmllint - | gzip > $NEWOUT
+      OUT=$NEWOUT
+      xmllint $OUT >/dev/null 2>/dev/null || { echo "ERROR: still invalid. abord."; return 1; }
+      echo now with a xml valid
+      }
+
     echo "Sending result"
 
     until [ "$tries" -ge 3 ]; do
